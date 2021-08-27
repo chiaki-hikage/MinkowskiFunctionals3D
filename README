@@ -1,0 +1,104 @@
+Running the Minkowski code
+--------------------------
+
+* path the library of cfitsio, rfftw and fftw
+
+* Prepare FITS input files for the mask and the data (see below).  The
+  size of the mask must be the size of the data times the desired
+  interpolation factor.  The makefile already takes care of this by
+  computing the proper size from the variables RES and INT and storing
+  it in the variable MASK, which contains the mask's filename.
+
+* The utility `raw2fits' reads raw data written either by C or Fortran
+  programs from standard input and writes them to a FITS file
+  specified after the -d command line switch.  By default a C array is
+  read, use the flag -F to force reading of a Fortran file.  It is
+  very easy to recognize a Fortran file by its size, there are 8 Bytes
+  more than one actually need for the data.
+
+  The switches -x, -y, and -z are used to give the dimensions of the
+  field - make sure the order of the axes and the byte ordering of the
+  data is correct.  There is no way to check to ordering of the axes
+  other than viewing the resulting FITS file.  The byte ordering is
+  checked by the program only for Fortran fields.
+  
+* If the byte ordering of your input data is the wrong way round, use
+  the utility `reversi' to change it.  This little program simple
+  reads standard input, reverses its byte order, and writes the result
+  to standard output.  Therefore, it can be used as a filter, such as
+  in the following example:
+
+  $ < mask_grid64.dat ./raw2fits -x64 -y64 -z64 -F -dmask_grid64.fits
+
+    OR
+
+  $ < mask_grid64.dat ./reversi | ./raw2fits -x64 -y64 -z64 -F -dmask_grid64.fits
+
+
+  The following is an example of standard output:
+
+    read 262144 values into array, expected 262144 values
+    determining range of data ...
+    check byte ordering if this throws a floating exception
+    data range from 0 to 1
+
+* Maybe you will be able to run the main program `beyond' by changing
+  a few variable in the makefile only and typing `make test'.  If you
+  need to run the code by hand, make sure you do so with the correct
+  options:
+
+  -x,y,z - size of the data array.
+
+  Note that the axes follow C ordering, i.e. if the FITS input file
+  for the data gives NAXIS1, NAXIS2, and NAXIS3 keywords in the
+  headers, the arguments should be -xNAXIS3 - yNAXIS2 -zNAXIS1.
+
+  -i - interpolation factor.
+
+  Remember that the size of the mask must be the size of the data
+  times the interpolation factor.  Also note that the interpolation
+  will be done in Fourier space, so it makes sense to also specify
+  some moderate smoothing length in order to cut down the ringing of
+  the survey boundary.
+
+  -s - smoothing scale.
+
+  A little smoothing is always a good idea and lead to better results.
+
+  -c - width of the cut at the survey boundary.
+
+  Specifies the width (in pixels) of the region that is cut away from
+  the boundary of the survey region.  If you get inconsistent results,
+  increase this parameter.  If you get too large sample variance or
+  even numerical overflow, decrease it.  If you can't find an
+  acceptable compromise, use higher resolution or a different dataset.
+
+  -t,T,n,w - lowest, highest, number of, width of threshold.
+
+  The width of the bins around thresholds only affects the calculation
+  of Minkowski functionals through Koenderink invariants.  Normally
+  there is no need to specify it explicitly, as it can be calculated
+  from the other three parameters.
+
+  -l - number of realizations of random field.
+
+  If no data file is given, or the specified data file cannot be read,
+  the program will calculate a random field and calculate its
+  Minkowski functionals.  This may be done several times, afterwards
+  the average and rms of all results will be output.
+
+  -o - output file for Minkowski functionals.
+
+  After an explanatory header, the file contains numbers in 25
+  columns: threshold (1 column), MFs by Crofton (4 columns), MFs by
+  Koenderink (4 columns), MF2 for Gaussian random field (4 columns),
+  rms deviations (12 columns).
+
+  -d,m - input files for data and mask.
+
+  If the input file cannot be read, a random fields will be generated
+  and analyzed.  If the mask cannot be read, there will be no mask.
+
+References:
+ J. Schmalzing and T. Buchert, ApJ, 482, L1, 1997
+ C. Hikage et al, PASJ, 55, 911-931, 2003
