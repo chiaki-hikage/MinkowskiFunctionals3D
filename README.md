@@ -1,4 +1,4 @@
-# MinkowskiFuctionals3D
+# 内容
 本コードは3次元空間の密度場(例えば、宇宙に銀河やダークマターの数密度分布など)のミンコフスキー汎関数を計算するコードです。
 
 ミンコフスキー汎関数は構造の形状やトポロジーを定量化したもので、３次元空間では、体積(V0)、表面積(V1)、平均曲率(V2)、オイラー数(V3)の4つがあります。
@@ -11,12 +11,11 @@
 ミンコフスキー汎関数は密度場のスムージング(高波数成分のフィルタリング)のスケールR_Gによって値が変わります。
 スムージングスケールが小さいほど、より小さい非線形スケールの構造を反映し、ミンコフスキー汎関数の形状も非対称になります。
 
-以下の論文はスローン・デジタル・スカイ・サーベイ(SDSS)で観測された銀河データからミンコフスキー汎関数(あるいはジーナス統計)を計算し、
-宇宙の標準的な構造形成モデルの予測と一致することや、銀河の明るさや形状などの属性による構造の違いを調べた先駆的な研究です。
+本コードを使って、スローン・デジタル・スカイ・サーベイ(SDSS)で観測された銀河データからミンコフスキー汎関数(あるいはジーナス統計)を計算し、
+宇宙の標準的な構造形成モデルの予測と一致することや、銀河の明るさや形状などの属性による構造の違いを調べました。
 
-"Minkowski Functionals of SDSS galaxies I: Analysis of Excursion Sets"
-
+# Reference
+"Minkowski Functionals of SDSS galaxies I: Analysis of Excursion Sets"  
 C. Hikage, J. Schmalzing, T. Buchert, Y. Suto, I. Kayo, A. Taruya,
-M. Vogeley, F. Hoyle, J. R. Gott III, J. Brinkmann for the SDSS collaboration
-
+M. Vogeley, F. Hoyle, J. R. Gott III, J. Brinkmann for the SDSS collaboration  
 Publ. Astron. Soc. Japan, Vol.55 No.5 (2003), pp.911-931 
