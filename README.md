@@ -15,6 +15,8 @@
 宇宙の標準的な構造形成モデルの予測と一致することや、銀河の明るさや形状などの属性による構造の違いを調べた先駆的な研究になります。
 
 "Minkowski Functionals of SDSS galaxies I: Analysis of Excursion Sets"
+
 C. Hikage, J. Schmalzing, T. Buchert, Y. Suto, I. Kayo, A. Taruya,
 M. Vogeley, F. Hoyle, J. R. Gott III, J. Brinkmann for the SDSS collaboration
+
 Publ. Astron. Soc. Japan, Vol.55 No.5 (2003), pp.911-931 
